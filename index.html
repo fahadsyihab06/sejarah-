@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sejarah Search</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #ffffff;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .search-container {
+            margin-top: 20px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+        .search-container input[type="text"] {
+            width: 60%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+        }
+        .search-container button {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            margin-left: 10px;
+            background-color: #ff5722;
+            color: white;
+            cursor: pointer;
+        }
+        .profile {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            margin-top: 20px;
+            background-color: #1e1e1e;
+            border-radius: 10px;
+            width: 80%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+        .profile img {
+            border-radius: 50%;
+            margin-bottom: 20px;
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border: 5px solid #ff5722;
+        }
+        .details {
+            text-align: center;
+        }
+        .details h2 {
+            margin: 0;
+            font-size: 24px;
+        }
+        .details p {
+            margin: 5px 0;
+            color: #b0b0b0;
+        }
+        .additional-info {
+            margin-top: 20px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .additional-info h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            text-align: center;
+            color: #ff5722;
+        }
+        .info-card {
+            width: 100%;
+            background-color: #292929;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .info-card i {
+            color: #ff5722;
+            margin-right: 10px;
+        }
+        .info-card p {
+            margin: 0;
+            flex: 1;
+        }
+        .info-card span {
+            color: #b0b0b0;
+        }
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            background-color: #333;
+            color: white;
+            border-radius: 10px;
+            text-align: center;
+            z-index: 1000;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+        .popup.show {
+            display: block;
+        }
+        .popup button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #ff5722;
+            border: none;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .hero-slider {
+            width: 80%;
+            margin: 20px auto;
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+        .hero-slider img {
+            width: 100%;
+            display: none;
+            border-radius: 10px;
+        }
+        .slider-content {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 10px;
+        }
+        .explanation {
+            margin: 20px 0;
+            text-align: center;
+            padding: 20px;
+            background-color: #1e1e1e;
+            border-radius: 10px;
+            width: 80%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+        .explanation h2 {
+            color: #ff5722;
+        }
+        .explanation p {
+            color: #b0b0b0;
+        }
+        .history {
+            margin: 20px 0;
+            text-align: center;
+            padding: 20px;
+            background-color: #1e1e1e;
+            border-radius: 10px;
+            width: 80%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+        .history h2 {
+            color: #ff5722;
+        }
+        .history p {
+            color: #b0b0b0;
+        }
+    </style>
+</head>
+<body>
+    <div class="search-container">
+        <input type="text" id="searchQuery" placeholder="Cari Tokoh/Sejarah">
+        <button onclick="searchWikipedia()">Cari</button>
+    </div>
+    <div class="hero-slider" id="heroSlider"></div>
+    <div class="explanation" id="explanation">
+        <h2>Selamat Datang di Situs Pencarian Sejarah</h2>
+        <p>Website ini dirancang untuk mempermudah Anda dalam mencari informasi dari Wikipedia. Dengan antarmuka yang sederhana dan intuitif, Anda bisa dengan cepat menemukan artikel, tokoh, dan peristiwa sejarah hanya dengan memasukkan kata kunci di bilah pencarian.Setelah Anda melakukan pencarian, hasilnya akan ditampilkan secara rinci, termasuk deskripsi singkat dan ekstrak dari artikel terkait. Untuk memperkaya pengalaman Anda, situs ini juga menampilkan slider gambar yang menampilkan tokoh-tokoh bersejarah penting, memberikan konteks visual yang menarik tentang berbagai periode sejarah.Jelajahi informasi mendalam dan sejarah yang menarik sambil menikmati tampilan visual dari gambar-gambar bersejarah kami. Website ini adalah alat yang ideal untuk pelajar, peneliti, dan siapa saja yang ingin memperluas pengetahuan mereka dengan cara yang menyenangkan dan informatif.Mulailah menjelajah dan temukan berbagai fakta menarik hari ini!</p>
+    </div>
+    <div class="profile" id="profile"></div>
+    <div class="history" id="history"></div>
+    <div class="popup" id="popup">
+        <p>Maaf, tidak ada hasil yang ditemukan.</p>
+        <button onclick="closePopup()">Tutup</button>
+    </div>
+    <script>
+        async function fetchWikipediaData(query) {
+            const response = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${query}`);
+            if (!response.ok) {
+                throw new Error('Tidak ada hasil yang ditemukan.');
+            }
+            const data = await response.json();
+            return data;
+        }
+
+        function displayProfile(data) {
+            const profileDiv = document.getElementById('profile');
+            profileDiv.innerHTML = `
+                <img src="${data.thumbnail ? data.thumbnail.source : 'https://via.placeholder.com/150'}" alt="${data.title}">
+                <div class="details">
+                    <h2>${data.title}</h2>
+                    <p>${data.description || 'Tidak ada deskripsi tersedia.'}</p>
+                    <p>${data.extract || 'Tidak ada ekstrak tersedia.'}</p>
+                    <a href="${data.content_urls.desktop.page}" target="_blank">Baca lebih lanjut</a>
+                </div>
+                <div class="additional-info">
+                    <h3><i class="fas fa-info-circle"></i> Tentang</h3>
+                    <div class="info-card">
+                        <i class="fas fa-birthday-cake"></i>
+                        <p><strong>Tanggal Lahir:</strong> <span>${data.birth_date || 'N/A'}</span></p>
+                    </div>
+                    <div class="info-card">
+                        <i class="fas fa-flag"></i>
+                        <p><strong>Kebangsaan:</strong> <span>${data.nationality || 'N/A'}</span></p>
+                    </div>
+                    <div class="info-card">
+                        <i class="fas fa-briefcase"></i>
+                        <p><strong>Pekerjaan:</strong> <span>${data.occupation || 'N/A'}</span></p>
+                    </div>
+                    <div class="info-card">
+                        <i class="fas fa-star"></i>
+                        <p><strong>Dikenal Untuk:</strong> <span>${data.known_for || 'N/A'}</span></p>
+                    </div>
+                </div>
+            `;
+            hideMainContent();
+        }
+
+        function displayHistory(data) {
+            const historyDiv = document.getElementById('history');
+            historyDiv.innerHTML = `
+                <h2>Sejarah: ${data.title}</h2>
+                <p>${data.extract || 'Tidak ada ekstrak tersedia.'}</p>
+                <a href="${data.content_urls.desktop.page}" target="_blank">Baca lebih lanjut</a>
+            `;
+        }
+
+        function showPopup(message) {
+            const popup = document.getElementById('popup');
+            popup.querySelector('p').innerText = message;
+            popup.classList.add('show');
+        }
+
+        function closePopup() {
+            const popup = document.getElementById('popup');
+            popup.classList.remove('show');
+        }
+
+        async function searchWikipedia() {
+            const query = document.getElementById('searchQuery').value;
+            try {
+                const data = await fetchWikipediaData(query);
+                if (query.toLowerCase().includes('sejarah')) {
+                    displayHistory(data);
+                } else {
+                    displayProfile(data);
+                }
+            } catch (error) {
+                showPopup(error.message);
+            }
+        }
+
+        function displayHeroSlider(images) {
+            const heroSlider = document.getElementById('heroSlider');
+            images.forEach((imgData, index) => {
+                const imgElement = document.createElement('img');
+                imgElement.src = imgData.src;
+                imgElement.alt = imgData.title || ''; // Check if title exists, else set as empty string
+                imgElement.style.display = index === 0 ? 'block' : 'none'; // Show the first image
+                heroSlider.appendChild(imgElement);
+
+                const sliderContent = document.createElement('div');
+                sliderContent.className = 'slider-content';
+                sliderContent.innerHTML = `
+                    <h3>${imgData.title || ''}</h3> <!-- Check if title exists, else set as empty string -->
+                `;
+                imgElement.appendChild(sliderContent);
+            });
+
+            let currentIndex = 0;
+            setInterval(() => {
+                const images = heroSlider.querySelectorAll('img');
+                images[currentIndex].style.display = 'none';
+                currentIndex = (currentIndex + 1) % images.length;
+                images[currentIndex].style.display = 'block';
+            }, 3000);
+        }
+
+        function hideMainContent() {
+            document.getElementById('explanation').style.display = 'none';
+        }
+
+        // Data gambar pahlawan untuk slider
+        const heroImages = [
+            { src: 'asset/Hitler.png', title: 'Pahlawan 1' },
+            { src: 'asset/Einstein.png', title: 'Pahlawan 2' },
+            { src: 'asset/Nikola.png', title: 'Pahlawan 3' },
+            { src: 'asset/Newton.png', title: 'Pahlawan 4' },
+
+        ];
+
+        // Panggil fungsi untuk menampilkan slider setelah halaman dimuat
+        document.addEventListener('DOMContentLoaded', () => {
+            displayHeroSlider(heroImages);
+        });
+    </script>
+</body>
+</html>
